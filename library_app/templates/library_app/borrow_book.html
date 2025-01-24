@@ -1,0 +1,59 @@
+<!-- library_app/templates/library_app/borrow_book.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Borrow a Book</title>
+</head>
+<body>
+<h1>Borrow a Book</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label for="copy_id">Select Book Copy:</label>
+    <select name="copy_id">
+        {% for copy in available_copies %}
+            <option value="{{ copy.id }}">{{ copy.book.name }} - Copy {{ copy.copy_number }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="borrower_type">Borrower Type:</label>
+    <select name="borrower_type">
+        <option value="student">Student</option>
+        <option value="staff">Staff</option>
+    </select>
+
+    <!-- For simplicity, just pick an ID from a list -->
+    <label for="borrower_id">Borrower:</label>
+    <select name="borrower_id" id="borrower_id_student" style="display: inline;">
+        <option disabled selected>Select Borrower</option>
+        {% for student in students %}
+            <option value="{{ student.id }}">{{ student.first_name }} {{ student.last_name }}</option>
+        {% endfor %}
+    </select>
+    <select name="borrower_id" id="borrower_id_staff" style="display: none;">
+        <option disabled selected>Select Borrower</option>
+        {% for staff in staff %}
+            <option value="{{ staff.id }}">{{ staff.name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Borrow</button>
+</form>
+
+<script>
+    // Simple JS toggle for demonstration
+    const borrowerTypeSelect = document.querySelector('[name="borrower_type"]');
+    const studentSelect = document.getElementById('borrower_id_student');
+    const staffSelect = document.getElementById('borrower_id_staff');
+
+    borrowerTypeSelect.addEventListener('change', function() {
+        if(this.value === 'student') {
+            studentSelect.style.display = 'inline';
+            staffSelect.style.display = 'none';
+        } else {
+            studentSelect.style.display = 'none';
+            staffSelect.style.display = 'inline';
+        }
+    });
+</script>
+</body>
+</html>

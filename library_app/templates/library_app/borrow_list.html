@@ -1,0 +1,31 @@
+<!-- library_app/templates/library_app/borrow_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Borrowed Books</title>
+</head>
+<body>
+<h1>Borrow Records</h1>
+
+<h2>Active Borrows</h2>
+<ul>
+{% for record in active_borrows %}
+    <li>
+        {{ record }}
+        <!-- e.g., "Student: John Doe borrowed Book Title - Copy 123" -->
+        <a href="{% url 'return_book' record.id %}">Return</a>
+    </li>
+{% endfor %}
+</ul>
+
+<h2>Returned</h2>
+<ul>
+{% for record in returned_borrows %}
+    <li>
+        {{ record }} - Returned on {{ record.returned_date }}
+        | Fine: {{ record.fine_amount }}
+    </li>
+{% endfor %}
+</ul>
+</body>
+</html>

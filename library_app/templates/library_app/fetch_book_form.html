@@ -1,0 +1,38 @@
+<!-- library_app/templates/library_app/fetch_book_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fetch Book Data</title>
+</head>
+<body>
+<h1>Fetch Book Data</h1>
+<form method="GET" action="">
+    <label for="barcode">Scan or Enter ISBN/Barcode:</label>
+    <input type="text" name="barcode" id="barcode" placeholder="9780143127796"/>
+    <button type="submit">Fetch</button>
+</form>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% if message %}
+<p style="color:green;">{{ message }}</p>
+{% endif %}
+
+{% if book %}
+<h2>Book Info</h2>
+<ul>
+    <li>Title: {{ book.name }}</li>
+    <li>ISBN: {{ book.isbn }}</li>
+    <li>Authors: {{ book.authors }}</li>
+    <li>Genres: {{ book.genres }}</li>
+    <li>Synopsis: {{ book.synopsis }}</li>
+    <li>Publisher: {{ book.publisher }}</li>
+    <li>Publication Date: {{ book.publication_date }}</li>
+    <li>Cover Image URL: <a href="{{ book.cover_image_url }}">{{ book.cover_image_url }}</a></li>
+    <li>Dewey Decimal: {{ book.dewey_decimal }}</li>
+</ul>
+{% endif %}
+</body>
+</html>
